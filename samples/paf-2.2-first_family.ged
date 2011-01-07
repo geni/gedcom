@@ -1,0 +1,215 @@
+0 HEAD
+  1 SOUR PAF 2.2
+  1 DEST PAF
+  1 DATE 20 NOV 1992
+  1 FILE ROYALS.GED
+  1 CHAR ANSEL
+0 @I1@ INDI
+  1 NAME Victoria  /Hanèover/
+  1 TITL Queen of England
+  1 SEX F
+  1 OCCU Queen of England
+  1 BIRT
+    2 DATE 24 MAY 1819
+    2 PLAC Kensington,Palace,London,England
+    2 NOTE birth note
+    2 NOTE @N1@
+  1 DEAT
+    2 DATE 22 JAN 1901
+    2 PLAC Osborne House,Isle of Wight,England
+  1 BURI
+    2 PLAC Royal Mausoleum,Frogmore,Berkshire,England
+  1 REFN 1
+  1 FAMS @F1@
+  1 NOTE inline 1
+    2 CONT inline
+    2 CONC  2
+  1 CONT inline 3
+  1 NOTE @N1@
+  1 SOUR @S1@
+    2 PAGE pp.1, 5
+    2 EVEN BIRT
+    2 DATA
+      3 DATE 24 MAY 1819
+      3 TEXT Extracted source text
+    2 QUAY 2
+    2 NOTE inline source citation note
+0 @I2@ INDI
+  1 NAME Albert Augustus Charles//
+  1 TITL Prince
+  1 SEX m
+  1 BIRT
+    2 DATE 26 AUG 1819
+    2 PLAC Schloss Rosenau,Near Coburg,Bavaria,Germany
+  1 DEAT
+    2 DATE 14 DEC 1861
+    2 PLAC Windsor Castle,Berkshire,England
+  1 BURI
+    2 PLAC Royal Masoleum,Frogmore,Windsor,England
+  1 FAMS @F1@
+0 @I3@ INDI
+  1 NAME Victoria Adelaide Mary//
+  1 TITL Princess Royal
+  1 SEX F
+  1 BIRT
+    2 DATE 21 NOV 1840
+    2 PLAC Buckingham,Palace,London,England
+  1 CHR
+    2 DATE 10 FEB 1841
+    2 PLAC Throne Room,Buckingham Palac,England
+  1 DEAT
+    2 DATE  5 AUG 1901
+    2 PLAC Friedrichshof,Near,Kronberg,Taunus
+  1 BURI
+    2 PLAC Friedenskirche,Potsdam
+  1 FAMC @F1@
+0 @I4@ INDI
+  1 NAME Edward_VII  /Wettin/
+  1 TITL King of England
+  1 SEX M
+  1 BIRT
+    2 DATE  9 NOV 1841
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE  6 MAY 1910
+    2 PLAC Buckingham,Palace,London,England
+  1 BURI
+    2 DATE 20 MAY 1910
+    2 PLAC Windsor,Berkshire,England
+  1 FAMC @F1@
+0 @I5@ INDI
+  1 NAME Alice Maud Mary//
+  1 TITL Princess
+  1 SEX F
+  1 BIRT
+    2 DATE 25 APR 1843
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE 14 DEC 1878
+    2 PLAC Darmstadt,,,Germany
+  1 FAMC @F1@
+0 @I6@ INDI
+  1 NAME Alfred Ernest Albert//
+  1 TITL Prince
+  1 SEX M
+  1 BIRT
+    2 DATE  6 AUG 1844
+    2 PLAC Windsor Castle,Berkshire,England
+  1 DEAT
+    2 DATE 30 JUL 1900
+    2 PLAC Schloss Rosenau,Near Coburg,Bavaria,Germany
+  1 FAMC @F1@
+0 @I7@ INDI
+  1 NAME Helena Augusta Victoria//
+  1 TITL Princess
+  1 SEX F
+  1 BIRT
+    2 DATE 25 MAY 1846
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE  9 JUN 1923
+    2 PLAC Schomberg House,Pall Mall,London,England
+  1 FAMC @F1@
+0 @I8@ INDI
+  1 NAME Louise Caroline Alberta//
+  1 TITL Princess
+  1 SEX F
+  1 BIRT
+    2 DATE 18 MAR 1848
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE  3 DEC 1939
+    2 PLAC Kensington,Palace,London,England
+  1 BURI
+    2 PLAC Frogmore,,,England
+  1 FAMC @F1@
+0 @I9@ INDI
+  1 NAME Arthur William Patrick//
+  1 TITL Prince
+  1 SEX M
+  1 BIRT
+    2 DATE  1 MAY 1850
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE 16 JAN 1942
+    2 PLAC Bagshot Park,Surrey,England
+  1 FAMC @F1@
+0 @I10@ INDI
+  1 NAME Leopold George Duncan//
+  1 TITL Prince
+  1 SEX M
+  1 BIRT
+    2 DATE  7 APR 1853
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE 28 MAR 1884
+    2 PLAC Cannes,France
+  1 FAMC @F1@
+0 @I11@ INDI
+  1 NAME Beatrice Mary Victoria//
+  1 TITL Princess
+  1 SEX F
+  1 BIRT
+    2 DATE 14 APR 1857
+    2 PLAC Buckingham,Palace,London,England
+  1 DEAT
+    2 DATE 26 OCT 1944
+    2 PLAC Bantridge Park,Balcombe,Sussex,England
+  1 FAMC @F1@
+0 @F1@ FAM
+  1 HUSB @I2@
+  1 WIFE @I1@
+  1 CHIL @I3@
+  1 CHIL @I4@
+  1 CHIL @I5@
+  1 CHIL @I6@
+  1 CHIL @I7@
+  1 CHIL @I8@
+  1 CHIL @I9@
+  1 CHIL @I10@
+  1 CHIL @I11@
+  1 DIV N
+  1 MARR
+    2 DATE 10 FEB 1840
+    2 PLAC Chapel Royal,St. James Palace,England
+    2 NOTE event note single
+    2 NOTE @N3@
+  1 NOTE family note single
+  1 NOTE @N2@
+0 @N1@ NOTE shared 1
+  1 CONT shared
+  1 CONC  2
+  1 CONT shared 3
+0 @N2@ NOTE family note shared
+0 @N3@ NOTE event note shared
+0 @R1@ REPO
+  1 NAME Family History Library
+  1 ADDR 35 N West Temple Street
+    2 CITY Salt Lake City
+    2 STAE UT
+    2 POST 84150
+    2 CTRY USA
+  1 PHON 801-240-2331
+  1 PHON 801-240-2332
+  1 PHON 801-240-2333
+0 @R2@ REPO
+  1 NAME UK National Repository
+0 @S1@ SOUR
+  1 DATA
+    2 EVEN BIRT,DEAT
+      3 DATE From 1 JAN 1819 to 31 DEC 1819
+      3 PLAC England
+    2 AGNC Church of England
+    2 NOTE inline source data note
+  1 AUTH Bishop Fred
+  1 TITL Royalty Birth Records
+  1 ABBR RBR
+  1 PUBL Published 1820
+  1 TEXT source text
+  1 REPO @R2@
+    2 CALN CN1001.2
+      3 MEDI fiche
+    2 CALN CN1001.3
+      3 MEDI fiche
+  1 NOTE inline source note
+0 TRLR
