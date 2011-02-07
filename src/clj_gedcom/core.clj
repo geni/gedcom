@@ -1,36 +1,65 @@
 (ns clj-gedcom.core
-  (:use [clojure.java.io :only [reader]]))
+  (:use [clojure.java.io :only [reader]]
+        [useful :only [update conj-vec tap]]))
+
+; helper accessor (may need to rename)
+(defn get-in* [r keys]
+  (get-in r (interpose 0 keys)))
 
 (defrecord GedcomLine [level label tag data])
 
-(defn gedcom-line [line]
+(defn gedcom-line
+  "Parse a GedcomLine record from a string."
+  [line]
   (when line
-    (let [[_ level label tag data] (re-matches #"^\s*(\d)\s+(@[^@]+@)?\s*(\w+)\s+(.*)?$" line)]
-      (GedcomLine. level label tag data))))
+    (let [[_ level label tag data] (re-matches #"^\s*(\d)(?:\s(@[^@]+@))?\s(\w+)(?:\s(.*))?$" line)]
+      (GedcomLine. (Integer. level) label tag data))))
 
 (defn gedcom-line-seq
-  "Read a GEDCOM line from a line sequence returning a gedcom-line.
+  "Read a GEDCOM line from a line sequence returning a GedcomLine record.
   Lines can be in the following formats:
     level label tag data
     level tag data
     level tag data\\r(level+1) CONT data
     level tag data\\r(level+1) CONC data"
-  [line-seq]
+  [lines]
   (lazy-seq
-    (loop [line-seq (rest line-seq)
-           line     (gedcom-line (first line-seq))]
-      (when line
-        (let [{:keys [tag data]} (gedcom-line (first line-seq))]
-          (if (contains? #{"CONT" "CONC"} tag)
-            (recur (rest line-seq)
-                   (update-in line [:data]
-                      #(str % (when (= "CONT" tag) "\n") data)))
-            (cons line (gedcom-line-seq line-seq))))))))
+   (loop [line  (first lines)
+          lines (rest  lines)]
+     (when line
+       (let [{:keys [tag data]} (first lines)]                  
+         (if (contains? #{"CONT" "CONC"} tag)
+           (recur (update line :data str
+                          (when (= "CONT" tag) "\n") data)
+                  (rest lines))
+           (cons line (gedcom-line-seq lines))))))))
 
-(defn read-gedcom-record
-  "Parse a GEDCOM record from a sequence returning a hash of the parts.
-  "
-  [seq]
+(defn level< [& args]
+  (apply < (map :level args)))
 
-)
+(defn parse-gedcom-record
+  "Recursively parse a record and all records beneath it."
+  [parent gedcom-lines]
+  (let [line (first gedcom-lines)]
+    (if (and line (level< parent line))
+      (let [tail (drop-while (partial level< line) (rest gedcom-lines))]
+        (parse-gedcom-record
+          (update parent (:tag line) conj-vec
+                  (parse-gedcom-record line (rest gedcom-lines)))
+          tail))
+      parent)))
 
+(defn gedcom-record-seq
+  "Parse a GEDCOM record from a sequence returning a lazy-seq of hashes."
+  [gedcom-lines]
+  (lazy-seq
+   (if (seq (rest gedcom-lines))
+     (let [[head tail] (split-with (comp pos? :level) (rest gedcom-lines))]
+       (cons (parse-gedcom-record (first gedcom-lines) head)
+             (gedcom-record-seq tail)))
+     (take 1 gedcom-lines))))
+
+(defn parse-gedcom-records
+  "Parses GEDCOM records from a file or reader."
+  [in]
+  (->> in reader line-seq (map gedcom-line) gedcom-line-seq gedcom-record-seq))
