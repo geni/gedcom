@@ -1,3 +1,3 @@
 (defproject clj-gedcom "0.0.1-SNAPSHOT"
-  :description "TODO: add summary of your project"
+  :description "A GEDCOM parser for Clojure."
   :dependencies [[org.clojure/clojure "1.3.0"]])
