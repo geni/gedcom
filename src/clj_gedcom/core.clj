@@ -1,6 +1,5 @@
 (ns clj-gedcom.core
-  (:use [clojure.java.io :only [reader]]
-        [useful :only [update conj-vec tap]]))
+  (:use [clojure.java.io :only [reader]]))
 
 ; helper accessor (may need to rename)
 (defn get-in* [r keys]
@@ -27,9 +26,9 @@
    (loop [line  (first lines)
           lines (rest  lines)]
      (when line
-       (let [{:keys [tag data]} (first lines)]                  
+       (let [{:keys [tag data]} (first lines)]
          (if (contains? #{"CONT" "CONC"} tag)
-           (recur (update line :data str
+           (recur (update-in line [:data] str
                           (when (= "CONT" tag) "\n") data)
                   (rest lines))
            (cons line (gedcom-line-seq lines))))))))
@@ -44,7 +43,7 @@
     (if (and line (level< parent line))
       (let [tail (drop-while (partial level< line) (rest gedcom-lines))]
         (parse-gedcom-record
-          (update parent (:tag line) conj-vec
+          (update-in parent [(:tag line)] (fnil conj [])
                   (parse-gedcom-record line (rest gedcom-lines)))
           tail))
       parent)))
