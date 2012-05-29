@@ -59,6 +59,17 @@
      (take 1 gedcom-lines))))
 
 (defn parse-gedcom-records
-  "Parses GEDCOM records from a file or reader."
+  "Parses GEDCOM records from a file or reader, returning a seq of records."
   [in]
   (->> in reader line-seq (map gedcom-line) gedcom-line-seq gedcom-record-seq))
+
+(defn parse-gedcom
+  "Parses GEDCOM records from a file or reader, returning map of labels to records."
+  [in]
+  (reduce (fn [records record]
+            (let [label (:label record)]
+              (when (contains? records label)
+                (throw (Exception. (format "duplicate record in GEDCOM for label %s" label))))
+              (assoc records label record)))
+          {}
+          (parse-gedcom-records in)))
