@@ -67,9 +67,6 @@
   "Parses GEDCOM records from a file or reader, returning map of labels to records."
   [in]
   (reduce (fn [records record]
-            (let [id (or (:label record) (:tag record))]
-              (when (contains? records id)
-                (throw (Exception. (format "duplicate record in GEDCOM for %s" id))))
-              (assoc records id record)))
+            (assoc records (or (:label record) (:tag record)) record))
           {}
           (parse-gedcom-records in)))
