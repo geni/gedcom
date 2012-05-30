@@ -1,5 +1,6 @@
 (ns clj-gedcom.core
-  (:use [clojure.java.io :only [reader]]))
+  (:use [clojure.java.io :only [reader input-stream]])
+  (:import org.apache.commons.io.input.BOMInputStream))
 
 ; helper accessor (may need to rename)
 (defn get-in* [r keys]
@@ -61,7 +62,8 @@
 (defn parse-gedcom-records
   "Parses GEDCOM records from a file or reader, returning a seq of records."
   [in]
-  (->> in reader line-seq (map gedcom-line) gedcom-line-seq gedcom-record-seq))
+  (->> in input-stream BOMInputStream. reader line-seq
+       (map gedcom-line) gedcom-line-seq gedcom-record-seq))
 
 (defn parse-gedcom
   "Parses GEDCOM records from a file or reader, returning map of labels to records."
