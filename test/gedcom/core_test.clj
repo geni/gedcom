@@ -1,7 +1,7 @@
-(ns clj-gedcom.core-test
+(ns gedcom.core-test
   (:use [clojure.string :only [split-lines]])
   (:use clojure.test)
-  (:use clj-gedcom.core))
+  (:use gedcom.core))
 
 (deftest parser
   (testing "gedcom-line"

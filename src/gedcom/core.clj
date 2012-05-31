@@ -1,4 +1,4 @@
-(ns clj-gedcom.core
+(ns gedcom.core
   (:use [clojure.java.io :only [reader input-stream]])
   (:import org.apache.commons.io.input.BOMInputStream))
 
