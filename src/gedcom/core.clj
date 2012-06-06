@@ -67,8 +67,11 @@
 
 (defn parse-gedcom
   "Parses GEDCOM records from a file or reader, returning map of labels to records."
-  [in]
-  (reduce (fn [records record]
-            (assoc records (or (:label record) (:tag record)) record))
-          {}
-          (parse-gedcom-records in)))
+  ([in]
+     (parse-gedcom in identity))
+  ([in post-process]
+     (reduce (fn [records record]
+               (assoc records (or (:label record) (:tag record))
+                      (post-process record)))
+             {}
+             (parse-gedcom-records in))))
