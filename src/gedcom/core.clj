@@ -1,6 +1,7 @@
 (ns gedcom.core
   (:use [clojure.java.io :only [reader input-stream]])
-  (:import org.apache.commons.io.input.BOMInputStream))
+  (:import org.apache.commons.io.input.BOMInputStream
+           java.io.InputStreamReader))
 
 ; helper accessor (may need to rename)
 (defn get-in* [r keys]
@@ -59,10 +60,16 @@
              (gedcom-record-seq tail)))
      (take 1 gedcom-lines))))
 
+(defn bom-reader [x]
+  (let [bom-stream (BOMInputStream. x)
+        encoding (.getBOMCharsetName bom-stream)]
+    (reader
+     (InputStreamReader. bom-stream (if (seq encoding) encoding "UTF-8")))))
+
 (defn parse-gedcom-records
   "Parses GEDCOM records from a file or reader, returning a seq of records."
   [in]
-  (->> in input-stream BOMInputStream. reader line-seq
+  (->> in input-stream bom-reader line-seq
        (map gedcom-line) gedcom-line-seq gedcom-record-seq))
 
 (defn parse-gedcom
