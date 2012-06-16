@@ -60,17 +60,38 @@
              (gedcom-record-seq tail)))
      (take 1 gedcom-lines))))
 
-(defn bom-reader [x]
-  (let [bom-stream (BOMInputStream. x)
-        encoding (.getBOMCharsetName bom-stream)]
-    (reader
-     (InputStreamReader. bom-stream (if (seq encoding) encoding "UTF-8")))))
+(defn gedcom-reader
+  "Takes an encoding (from the CHAR tag) and returns a reader
+   that reads the GEDCOM file in the proper encoding."
+  [encoding in]
+  (let [encoding (case (and encoding (.toLowerCase encoding))
+                   "ansel"   "ANSEL"
+                   "ansi"    "Windows-1252"
+                   "cp1252"  "Windows-1252"
+                   "unicode" "UTF-16"
+                   "utf-8"   "UTF-8"
+                   "utf8"    "UTF-8"
+                   nil)]
+    (if encoding
+      (reader (InputStreamReader. in encoding))
+      (reader in))))
+
+(defn ^:private parse-gedcom-records*
+  "Parses GEDCOM records from a file or reader, returning a seq of records.
+   Takes an optional encoding."
+  [in & [encoding]]
+  (->> in input-stream BOMInputStream. (gedcom-reader encoding) line-seq
+       (map gedcom-line) gedcom-line-seq gedcom-record-seq))
 
 (defn parse-gedcom-records
-  "Parses GEDCOM records from a file or reader, returning a seq of records."
+  "Parses GEDCOM record from a file or reader, returning a seq of records."
   [in]
-  (->> in input-stream bom-reader line-seq
-       (map gedcom-line) gedcom-line-seq gedcom-record-seq))
+  (let [records (parse-gedcom-records* in)
+        head (first records)]
+    (if-let [encoding (and (= "HEAD" (:tag head))
+                           (-> head (get "CHAR") first :data))]
+      (parse-gedcom-records* in encoding)
+      records)))
 
 (defn parse-gedcom
   "Parses GEDCOM records from a file or reader, returning map of labels to records."
