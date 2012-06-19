@@ -12,7 +12,7 @@
 (defn gedcom-line
   "Parse a GedcomLine record from a string."
   [line]
-  (when line
+  (when (seq line)
     (let [[_ level label tag data] (re-matches #"^\s*(\d)(?:\s(@[^@]+@))?\s(\w+)(?:\s(.*))?$" line)]
       (GedcomLine. (Integer. level) label tag data))))
 
