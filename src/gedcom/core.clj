@@ -7,14 +7,14 @@
 (defn get-in* [r keys]
   (get-in r (interpose 0 keys)))
 
-(defrecord GedcomLine [level label tag data])
+(defrecord GedcomLine [level label tag data suffix])
 
 (defn gedcom-line
   "Parse a GedcomLine record from a string."
   [line]
   (when (seq line)
-    (let [[_ level label tag data] (re-matches #"^\s*(\d)(?:\s(@[^@]+@))?\s(\w+)(?:\s(.*))?$" line)]
-      (GedcomLine. (Integer. level) label tag data))))
+    (let [[_ level label tag suffix data] (re-matches #"^\s*(\d)(?:\s(@[^@]+@))?\s(\w+?)(?:__(\w+))?(?:\s(.*))?$" line)]
+      (GedcomLine. (Integer. level) label tag data suffix))))
 
 (defn gedcom-line-seq
   "Read a GEDCOM line from a line sequence returning a GedcomLine record.
