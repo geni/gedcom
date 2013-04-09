@@ -1,4 +1,4 @@
-(defproject gedcom "0.1.0"
+(defproject gedcom "0.1.1"
   :description "A GEDCOM library written in Clojure."
   :license {:name "Eclipse Public License - v 1.0"
             :url "http://www.eclipse.org/legal/epl-v10.html"
